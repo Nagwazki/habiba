@@ -103,7 +103,7 @@ const Hero = () => {
           
           <img 
             ref={imgRef}
-            src={`${import.meta.env.BASE_URL}photo/hero.JPG`} 
+            src={`${import.meta.env.BASE_URL}photo/hero.png`} 
             alt="Habiba Khidr" 
             className="w-full h-full object-cover object-top md:object-center"
           />
