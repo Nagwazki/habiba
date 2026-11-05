@@ -4,6 +4,7 @@ import gsap from 'gsap';
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,7 +13,26 @@ const Navbar = () => {
       } else {
         setScrolled(false);
       }
+
+      const sections = ['home', 'about', 'work', 'expertise', 'contact'];
+      let current = '';
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= window.innerHeight / 3 && rect.bottom >= window.innerHeight / 3) {
+            current = section;
+          }
+        }
+      }
+      
+      if (current) {
+        setActiveSection(current);
+      }
     };
+
+    handleScroll(); // Initial check
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -65,16 +85,19 @@ const Navbar = () => {
 
           {/* CENTER */}
           <div className="hidden md:flex w-1/3 justify-center items-center space-x-12">
-            {navLinks.map((link) => (
-              <a 
-                key={link.name} 
-                href={link.href}
-                className="font-sans text-[10px] tracking-[0.25em] font-medium text-brand-beige hover:text-brand-cream transition-colors relative group uppercase pb-1"
-              >
-                {link.name}
-                <span className="absolute bottom-0 left-0 w-full h-px bg-brand-cream transform scale-x-0 origin-right group-hover:scale-x-100 group-hover:origin-left transition-transform duration-500 ease-out"></span>
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.substring(1);
+              return (
+                <a 
+                  key={link.name} 
+                  href={link.href}
+                  className={`font-sans text-[10px] tracking-[0.25em] font-medium transition-colors relative group uppercase pb-1 ${isActive ? 'text-brand-cream' : 'text-brand-beige hover:text-brand-cream'}`}
+                >
+                  {link.name}
+                  <span className={`absolute bottom-0 left-0 w-full h-px bg-brand-cream transition-transform duration-500 ease-out ${isActive ? 'scale-x-100 origin-left' : 'transform scale-x-0 origin-right group-hover:scale-x-100 group-hover:origin-left'}`}></span>
+                </a>
+              );
+            })}
           </div>
 
           {/* RIGHT */}

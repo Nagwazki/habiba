@@ -71,10 +71,6 @@ const About = () => {
               </svg>
             </div>
             
-            <div className="annotation absolute bottom-4 -right-4 z-20 font-sans text-[10px] uppercase tracking-widest text-brand-black bg-brand-beige border border-brand-warm px-3 py-1 -rotate-3">
-              SCENE 01 / TAKE 01
-            </div>
-
           </div>
         </div>
       </div>
